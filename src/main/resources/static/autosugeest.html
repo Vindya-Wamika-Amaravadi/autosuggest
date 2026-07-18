@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            text-align:center;
+            background-color:aliceblue;
+        }
+        .gear{
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+        .pill{
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+        .logo{
+            margin-top: 100px;
+            font-size: 80px;
+        }
+        .logo-one{
+            color: purple;
+        }
+        .tagline{
+            color: gray;
+        }
+        .searchbox{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 20px;
+            width: 70%;
+        }
+        .suggestionbox{
+             width: 70%;
+            margin: 8px 0 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            text-align: left;
+            margin: 0px auto;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <span class="gear"> &#x2699; </span>
+    <span class="pill"> &#x2022; online | &#x1F552; </span>
+    <br>
+    <h1 class="logo"><span class="logo-one"> Being </span> Infinity </h1>
+    <p class="tagline"> One million phrases. Four algorithms. Prefix based autosuggest. </p>
+    <input class="searchbox"type="text" placeholder=" &#128270 start typing to search phrases..." >
+    <div class="search-suggestions"></div>
+    <div class="suggestionbox"> Data Science
+         <br> Artificial Intelligence and Data Science 
+         <br> Cyber Security </div>
+         <script>
+            function getSearchSugssestins(){
+                var searchBox = document.getElementById("searchbox");
+                var searchsuggestions = documet.getElementById("search-suggestions");
+                var userInput = searchBox.value;
+                if(userInput.trim() === "")return;
+                var URL1= "https://autosuggest-backend.onrender.com/api/autosuggest?q=";
+                var URL3= "ba&algorithm=brute&limit=10&weighted=false"
+                var URL = URL1 + userInput + URL3;
+            fetch(URL){
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(data){
+                    var searchResults = "";
+                    var suggestions = data.results;
+                    for(var i=0; i<data.count; i++){
+                        searchResults+= "<div class='suggestion'>"+
+                            suggestions[i].text +
+                             "</div>";
+                    } 
+                    searchsuggestions.innerHTML = searchResults;
+                })
+            }            }
+         </script>
+    </body>
+    </html>
